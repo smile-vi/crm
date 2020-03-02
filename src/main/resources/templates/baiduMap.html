@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Hello, World</title>
+		<style type="text/css">
+			html {
+				height: 100%
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+			
+			#container {
+				height: 100%
+			}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=M15Ux4beOGYPeLcIIKRItfPin9dcAvus">
+			//v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
+		</script>
+	</head>
+
+	<body>
+		<div id="container"></div>
+		<!--// 创建点坐标  113.00 25.79  114.02,22.54-->
+		<script type="text/javascript">
+			// 百度地图API功能
+			var map = new BMap.Map("container");
+			map.centerAndZoom("广东深圳",12);  //初始化地图,设置城市和地图级别。
+			var pointA = new BMap.Point(113.937144,22.538767);  // 创建点坐标A--南山区政府
+			var pointB = new BMap.Point(114.061568,22.527958);  // 创建点坐标B--福田区政府
+			map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+			alert('从南山区政府到福田区政府的距离是：'+(map.getDistance(pointA,pointB)).toFixed(0)/1000+' 公里。');  //获取两点距离,保留小数点后两位
+			var polyline = new BMap.Polyline([pointA,pointB], {strokeColor:"black", strokeWeight:6, strokeOpacity:0.5});  //定义折线
+			map.addOverlay(polyline);     //添加折线到地图上
+			var point = new BMap.Point(113.937144,22.538767);
+			var marker = new BMap.Marker(point);  // 创建标注
+			map.addOverlay(marker);              // 将标注添加到地图中
+			marker.addEventListener("click",getAttr);
+			var point2 = new BMap.Point(114.061568,22.527958);
+			var marker2 = new BMap.Marker(point2);  // 创建标注
+			map.addOverlay(marker2);              // 将标注添加到地图中
+			marker2.addEventListener("click",getAttr);
+			function getAttr(){
+
+				var p = marker.getPosition();       //获取marker的位置
+
+				alert("marker的位置是" + p.lng + "," + p.lat);
+
+			}
+		</script>
+	</body>
+
+</html>

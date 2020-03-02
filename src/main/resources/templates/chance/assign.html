@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>指派销售机会</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>指派销售机会 <i class="fa fa-user"></i></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="clearfix"></div>
+                        <form class="form-horizontal form-label-left" th:action="@{/assignChance/save}" action="/assignChance/save" method="post">
+
+                            <input type="hidden" name="chcStatus" id="chcStatus" value="1" th:value="开发中">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcCustName"> 编号
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcId" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcId" readonly
+                                           type="text" th:value="${chance.chcId}">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcCustName"> 客户名称
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcCustName" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcCustName"  readonly
+                                           placeholder="请输入客户名称" type="text" th:value="${chance.chcCustName}">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcLinkman"> 负责人
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcLinkman" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcLinkman" readonly
+                                           placeholder="请输入负责人" type="text" th:value="${chance.chcLinkman}">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcSource"> 机会来源
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcSource" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcSource" readonly
+                                           placeholder="请输入机会来源" type="text" th:value="${chance.chcSource}">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcRate"> 成功几率(%)
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcRate" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcRate"  readonly
+                                           placeholder="请输入成功几率" type="text" th:value="${chance.chcRate}">
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcTel"> 公司电话
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcTel" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcTel"  readonly
+                                           placeholder="请输入公司电话" type="text" th:value="${chance.chcTel}">
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcTitle"> 概要 <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcTitle" class="form-control col-md-7 col-xs-12"
+                                           data-validate-length-range="10" data-validate-words="1" name="chcTitle"  readonly
+                                           placeholder="请输入公司电话" type="text" th:value="${chance.chcTitle}">
+                                </div>
+                            </div>
+
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcDesc"> 机会描述 <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <textarea id="chcDesc" class="form-control col-md-7 col-xs-12"
+                                          data-validate-length-range="10" data-validate-words="1" name="chcDesc" readonly th:text="${chance.chcDesc}"
+                                > </textarea>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcDueId"> 指派给 <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="chcDueId" id="chcDueId" class="form-control" required="required">
+                                        <option th:selected="${role.usrId eq chance.chcDueId}" th:each="role:${userList}" th:value="${role.usrId}" th:text="${role.usrName}" value="">指派人</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="chcLinkman"> 指派日期 <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="chcDueDate" type="date" value="2020-01-01" name="chcDueDate" th:value="${#dates.format(chance.chcDueDate,'yyyy-MM-dd')}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button id="send" type="submit" class="btn btn-success">保存</button>
+                                    <button type="button" class="btn btn-primary" id="back">返回</button>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#back").on("click",function(){
+            window.history.back();
+        });
+    });
+</script>
+</html>

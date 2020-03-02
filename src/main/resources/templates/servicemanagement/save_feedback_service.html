@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>服务反馈</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>服务反馈<i class="fa fa-user"></i></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="clearfix"></div>
+                        <form class="form-horizontal form-label-left" th:action="@{/servicemanagement/savefeedback_servicesave}" action="/lost/save"
+                              method="post">
+                            <div class="x_content">
+                                <input type="hidden" name="customer.custNo" th:value="${service.customer.custNo}">
+                                <input type="hidden" name="svrCreateId" th:value="${service.svrCreateId}">
+                                <input type="hidden" name="svrDealId" th:value="${user.usrId}">
+                                <input type="hidden" name="svrCreateDate" th:value="${service.svrCreateDate}">
+                                <input type="hidden" name="svrDueDate" th:value="${service.svrDueDate}">
+                                <input type="hidden" name="svrId" th:value="${service.svrId}">
+                                <input type="hidden" name="svrDueId" th:value="${service.svrDueId}">
+                                <input type="hidden" name="svrDealDate" th:value="${service.svrDealDate}">
+                                <input type="hidden" name="svrDealId" th:value="${service.svrDealId}">
+                                <input type="hidden" name="svrDeal" th:value="${service.svrDeal}">
+                                <br>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">编号</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrId"  name="svrId1" th:value="${service.svrId}" readonly >
+                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">服务类型</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrType"  name="svrType" th:value="${service.svrType}" readonly >
+                                </div>
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">概要</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrTitle"  name="svrTitle" th:value="${service.svrTitle}" readonly>
+                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">客户</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrCustName"  name="svrCustName" th:value="${service.svrCustName}" readonly >
+                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">状态</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrStatus"  name="svrStatus1" th:value="${service.svrStatus}" readonly >
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">服务请求</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrRequest"  name="svrRequest" th:value="${service.svrRequest}" readonly>
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">创建人</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrCreateBy"  name="svrCreateBy" th:value="${service.svrCreateBy}" readonly >
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">创建时间</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrCreateDate1" name="svrCreateDate1" th:value="${#dates.format(service.svrCreateDate,'yyyy-MM-dd')}" readonly>
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">分配给</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrDueTo"  name="svrDueTo" th:value="${service.svrDueTo}" readonly>
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">分配时间</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrDueDate1" readonly="readonly" name="svrDueDate1" th:value="${#dates.format(service.svrDueDate, 'yyyy年MM月dd日')}">
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">处理人</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrDealBy" name="svrDealBy" th:value="${user.usrName}" readonly>
+                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">处理时间</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrDealDate1" readonly="readonly" name="svrDealDate1" th:value="${#dates.format(new java.util.Date().getTime(), 'yyyy年MM月dd日')}">
+                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">处理结果</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="svrResult" name="svrResult">
+                                </div>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">满意度</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <select name="svrSatisfy" id="svrSatisfy">
+                                        <option value="1">😘</option>
+                                        <option value="2">😘😘</option>
+                                        <option value="3">😘😘😘</option>
+                                        <option value="4">😘😘😘😘</option>
+                                        <option value="5">😘😘😘😘😘</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button id="send" type="submit" class="btn btn-success">保存</button>
+                                    <button type="button" class="btn btn-primary" id="back">返回</button>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function () {
+        $("#back").on("click", function () {
+            window.history.back();
+        });
+
+    });
+
+</script>
+</html>

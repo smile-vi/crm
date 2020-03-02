@@ -1,0 +1,49 @@
+#spring:
+  #datasource:
+  #  driver-class-name: com.mysql.jdbc.Driver
+   # password: root
+   # url: jdbc:mysql://localhost:3306/crm?serverTimezone=UTC&useUnicode=true
+   # username: root
+ # jpa:
+    #properties:
+    #  hibernate:
+    #    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    #    format_sql: true
+   # show-sql: true
+
+ # thymeleaf:
+  #  cache: false
+
+ # redis:
+  #    host: 127.0.0.1
+   #   port: 6379
+   #   timeout: 5000
+  # lettuce:
+   #  pool:
+    #   max-active: 8
+    #   max-wait: -1
+   #    max-idle: 500
+    #   min-idle: 0
+    #   shutdown-timeout: 0
+      #password: 123456
+      #jedis:
+       # pool:
+        #  max-active: 8
+        #  max-wait: -1
+         # max-idle: 500
+        #  min-idle: 0
+
+
+
+
+
+logging:
+  level:
+    com:
+        t248:
+          lhd:
+            crm:
+            repository: debug
+            #server:
+            #  servlet:
+            #    context-path: /crm

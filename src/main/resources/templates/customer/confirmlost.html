@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>确认流失</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>确认流失<i class="fa fa-user"></i></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="clearfix"></div>
+                        <form class="form-horizontal form-label-left" th:action="@{/customer/save}" action="/lost/save"
+                              method="post">
+                            <div class="x_content">
+                                <input type="hidden" class="form-control" id="lstCustNo"  name="lstCustNo" th:value="${lost.lstCustNo}" >
+                                <input type="hidden" class="form-control" id="lstCustManagerId"  name="lstCustManagerId" th:value="${lost.lstCustManagerId}" >
+                                <input type="hidden" class="form-control" id="lstStatus"  name="lstStatus" value="确认流失">
+                                <input type="hidden" class="form-control" id="lstLostDate"  name="lstLostDate"  th:value="${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd HH:mm:ss')}">
+                                <input type="hidden" class="form-control" id="lstLastOrderDate" name="lstLastOrderDate" th:value="${lost.lstLastOrderDate}">
+
+                                <br>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">编号：</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="lstId" readonly="readonly" name="lstId" th:value="${lost.lstId}" >
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">客户名称：</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="lstCustName" readonly="readonly" name="lstCustName" th:value="${lost.lstCustName}">
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">客户经理：</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="lstCustManagerName" readonly="readonly" name="lstCustManagerName" th:value="${lost.lstCustManagerName}">
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">上次下单时间：</label>
+                                <div class="col-md-3 col-sm-3 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="lstLastOrderDate1" readonly="readonly" name="lstLastOrderDate1" th:value="${#dates.format(lost.lstLastOrderDate, 'yyyy年MM月dd日')}">
+                                </div>
+
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">暂缓措施：</label>
+                                <div class="col-md-9 col-sm-9 col-xs-12 form-group has-feedback">
+                                    <input type="text" class="form-control" id="lstDelay" readonly="readonly" name="lstDelay" th:value="${lost.lstDelay}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">流失原因：</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <textarea class="form-control" rows="3" name="lstReason" id="lstReason" th:value="${lost.lstReason}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button id="send" type="submit" class="btn btn-success">保存</button>
+                                    <button type="button" class="btn btn-primary" id="back">返回</button>
+                                    <br/><br/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="js">
+    $(document).ready(function () {
+        $("#back").on("click", function () {
+            window.history.back();
+        });
+
+    });
+    $(document).submit(function(){
+        if ($("#lstReason").val()==null||$("#lstReason").val()==""){
+            alert("原因不能为空");
+            return false;
+        }
+        return true;
+    })
+</script>
+</html>

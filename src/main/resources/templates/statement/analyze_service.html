@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="main"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <title>客户服务分析</title>
+    <link th:href="@{/localcss/crmlist.css}" href="../static/localcss/crmlist.css" rel="stylesheet">
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            客户服务分析 <i class="fa fa-user"></i>
+                            <small>
+                                - 您可以通过搜索或者其他的筛选项对用户的信息进行编辑、删除等管理操作。^_^
+                            </small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                    </div>
+                </div>
+            </div>
+            <form th:action="@{/statement/analyze_service}" method="post">
+                <input type="hidden" name="pageIndex" value="1"/>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30"></p>
+                        <div id="datatable-responsive_wrapper"
+                             class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <a href="/chance/add" th:href="@{/chance/add}"
+                                       class="btn btn-success btn-sm">新建</a>
+                                    <table id="datatable-responsive"
+                                           class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                                           cellspacing="0" width="100%" role="grid"
+                                           aria-describedby="datatable-responsive_info" style="width: 100%;">
+                                        <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="First name: activate to sort column descending"
+                                                aria-sort="ascending">编号
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                条目
+                                            </th>
+                                            <th class="sorting" tabindex="0"
+                                                aria-controls="datatable-responsive" rowspan="1" colspan="1"
+                                                aria-label="Last name: activate to sort column ascending">
+                                                服务数量
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody><tr role="row" class="odd" th:each="user,iterStat:${servicePage.getContent()}">
+                                            <td tabindex="0" class="sorting_1" th:text="${iterStat.count}">usrId</td>
+                                            <td th:text="${user[1]}">usrName</td>
+                                            <td th:text="${user[0]}">usrName</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!--分页start-->
+    <div class="col-sm-5">
+        <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">共
+            <span th:text="${servicePage.totalElements}">1</span>条记录
+            <span th:text="${servicePage.number+1}">1</span>/<span th:text="${servicePage.totalPages}">1</span>
+            页</div>
+    </div>
+    <div class="col-sm-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="datatable-responsive_paginate">
+            <ul class="pagination">
+                <li class="paginate_button previous" th:if="${servicePage.number gt 0}">
+                    <a href="javascript:page_nav(document.forms[0],1);"
+                       aria-controls="datatable-responsive"
+                       data-dt-idx="0" tabindex="0">首页</a>
+                </li>
+                <li class="paginate_button" th:if="${servicePage.number gt 0}">
+                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${servicePage.number}+');'"
+                       aria-controls="datatable-responsive" data-dt-idx="1" tabindex="0">
+                        上一页
+                    </a>
+                </li>
+                <li class="paginate_button" th:if="${(servicePage.number+1) lt servicePage.totalPages}">
+                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${servicePage.number+2}+');'"
+                       aria-controls="datatable-responsive" data-dt-idx="1" tabindex="0">
+                        下一页
+                    </a>
+                </li>
+                <li class="paginate_button next" th:if="${(servicePage.number+1) lt servicePage.totalPages}">
+                    <a href="#" th:onclick="'javascript:page_nav(document.forms[0],'+${servicePage.totalPages}+');'"
+                       aria-controls="datatable-responsive" data-dt-idx="7" tabindex="0">最后一页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--分页end-->
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+       /* // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+
+        // 指定图表的配置项和数据
+        var option = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '直接访问',
+                    type: 'bar',
+                    barWidth: '60%',
+                    data: [10, 52, 200, 334, 390, 330, 220]
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);*/
+       $(document).ready(function(){
+           // 基于准备好的dom，初始化echarts实例
+           var myChart = echarts.init(document.getElementById('main'));
+           //数据加载完之前先显示一段简单的loading动画
+           myChart.showLoading();
+           var names=[];    //横坐标数组（实际用来盛放X轴坐标值）
+           var values=[];    //纵坐标数组（实际用来盛放Y坐标值）
+           $.ajax({
+               type : "post",
+               async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+               url : "echarsShow",    //请求发送到dataActiont处
+               data : {},
+               dataType : "json",        //返回数据形式为json
+               success : function(result) {
+                   //请求成功时执行该函数内容，result即为服务器返回的json对象
+                   if (result) {
+
+                       for(var i=0;i<result.length;i++){
+                           names.push(result[i].domain);
+                           values.push(result[i].visitCount);
+                       }
+                       myChart.hideLoading();    //隐藏加载动画
+                       myChart.setOption({        //加载数据图表
+                           tooltip: {},
+                           legend: {
+                               data:['數量']
+                           },
+                           xAxis: {
+                               data: names
+                           },
+                           yAxis: {
+                               type: 'value'
+                           },
+                           series: [{
+                               // 根据名字对应到相应的系列
+                               name: '數量',//薪资 series not exists. Legend data should be same with series name or data name.
+                               type: 'bar',
+                               data: values
+                           }]
+                       });
+                   }
+               },
+               error : function(errorMsg) {
+                   //请求失败时执行该函数
+                   alert("图表请求数据失败!");
+                   myChart.hideLoading();
+               }
+           });//end ajax
+       });
+
+    </script>
+</body>
+</html>
