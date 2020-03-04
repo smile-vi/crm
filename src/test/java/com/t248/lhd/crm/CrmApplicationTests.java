@@ -6,8 +6,10 @@ import com.t248.lhd.crm.com.ucpaas.restDemo.client.JsonReqClient;
 import com.t248.lhd.crm.entity.CusService;
 import com.t248.lhd.crm.entity.OrdersSolr;
 import com.t248.lhd.crm.entity.SolrTest;
+import com.t248.lhd.crm.entity.User;
 import com.t248.lhd.crm.repository.CusServiceRepository;
 import com.t248.lhd.crm.service.MailService;
+import com.t248.lhd.crm.service.TokenService;
 import com.t248.lhd.crm.service.impl.RamJob;
 import com.t248.lhd.crm.tools.RedisUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -522,6 +524,16 @@ return ChineseFont; 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Resource
+    TokenService tokenService;
+    @Test
+    public void redisTest() throws Exception {
+        User user=new User();
+        user.setUsrName("admin");
+        user.setUsrPassword("123");
+        String token=tokenService.generateToken("",user.getUsrName());
+        tokenService.save(token,user);
     }
 }
 

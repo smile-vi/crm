@@ -79,7 +79,7 @@ public class UserController {
 
            request.getSession().setAttribute("user",user);
            String userAgent=request.getHeader("user-agent");
-           String token1=tokenService.generateToken();
+           String token1=tokenService.generateToken("",usrName);
            tokenService.save(token1, user);
            Cookie cookie = new Cookie("token_name",token1);
            cookie.setPath("/");

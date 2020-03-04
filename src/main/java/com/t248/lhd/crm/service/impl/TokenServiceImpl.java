@@ -2,13 +2,16 @@ package com.t248.lhd.crm.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import com.t248.lhd.crm.entity.User;
 import com.t248.lhd.crm.entity.UserToken;
 import com.t248.lhd.crm.service.TokenService;
 import com.t248.lhd.crm.tools.RedisUtil;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,21 +26,29 @@ public class TokenServiceImpl implements TokenService {
 	private RedisUtil redisUtil;
 	
 	@Override
-	public String generateToken() throws Exception {
-		String uid=UUID.randomUUID().toString().replace("-", "");
-		StringBuffer sb=new StringBuffer();
-		sb.append("token:");
-		sb.append(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+"-");
-		sb.append(uid);
-		// TODO Auto-generated method stub
-		return sb.toString();
+	public String generateToken(String userAgentStr, String username) {
+		StringBuilder token = new StringBuilder("token:");
+		//设备
+		/*UserAgent userAgent = UserAgent.parseUserAgentString(userAgentStr);
+		if (userAgent.getOperatingSystem().isMobileDevice()) {
+			token.append("MOBILE-");
+		} else {
+			token.append("PC-");
+		}*/
+		//加密的用户名
+		token.append(DigestUtils.md5Hex(username) + "-");
+		//时间
+		token.append(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) + "-");
+		//六位随机字符串
+		token.append(new Random().nextInt(999999 - 111111 + 1) + 111111 );
+		System.out.println("token-->" + token.toString());
+		return token.toString();
 	}
 	@Transactional
 	@Override
-	public void save(String token,Object devUser) throws Exception {
-		UserToken userToken=new UserToken();
-		BeanUtils.copyProperties(devUser,userToken);
-		redisUtil.set(token,JSON.toJSONString(userToken),2*60*60);
+	public void save(String token, User devUser) throws Exception {
+
+		redisUtil.set(token,JSON.toJSONString(devUser),2*60*60);
 		
 	}
 

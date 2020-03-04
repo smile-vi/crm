@@ -1,5 +1,6 @@
 package com.t248.lhd.crm.service;
 
+import com.t248.lhd.crm.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,14 +11,14 @@ public interface TokenService {
 	 * @return
 	 * @throws Exception
 	 */
-	public String generateToken() throws Exception;
+	public String generateToken(String userAgentStr, String username) throws Exception;
 	/**
 	 * ����token
 	 * @param token
 	 * @param devUser
 	 * @throws Exception
 	 */
-	public void save(String token, Object devUser) throws Exception;
+	public void save(String token, User devUser) throws Exception;
 	/**
 	 * ��ѯ�Ƿ����token
 	 * @param token
